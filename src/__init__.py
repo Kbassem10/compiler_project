@@ -1,18 +1,8 @@
-"""Mini Java Compiler - Phase 01: Lexical Analysis
-
-Shared Core Contracts (Frozen).
-"""
-
 from .token_type import TokenType
 from .token import Token
 from .errors import LexicalError
 from .cursor import SourceCursor
-from .conventions import (
-    KEYWORDS,
-    OPERATORS,
-    DELIMITERS,
-    EOF_CHAR,
-)
+from .conventions import KEYWORDS, OPERATORS, DELIMITERS
 
 __all__ = [
     "TokenType",
@@ -22,5 +12,4 @@ __all__ = [
     "KEYWORDS",
     "OPERATORS",
     "DELIMITERS",
-    "EOF_CHAR",
 ]
