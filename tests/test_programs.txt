@@ -1,0 +1,52 @@
+// ==========================================
+// Mini Java Compiler - Test Programs Corpus
+// Phase 01: Lexical Analysis
+// ==========================================
+
+// Program 1: Minimal Valid Class (From Spec)
+class A { }
+
+// Program 2: Standard Class with Main Method and Variable Declarations
+class MainTest {
+    public static void main() {
+        int count = 10;
+        float ratio = 3.14;
+        boolean isActive = true;
+        char initial = 'K';
+        String greeting = "Hello, Mini Java!";
+        return;
+    }
+}
+
+// Program 3: Control Flow (If / Else / While / For)
+class ControlFlow {
+    void evaluate(int limit) {
+        int i = 0;
+        while (i < limit) {
+            if (i == 5) {
+                return;
+            } else {
+                i = i + 1;
+            }
+        }
+        for (i = 0; i <= 10; i = i + 1) {
+            limit = limit * 2;
+        }
+    }
+}
+
+// Program 4: Operators & Expressions
+class OperatorsTest {
+    void mathAndLogic() {
+        int a = 10 + 20 - 5 * 2 / 1;
+        boolean condition = (a >= 10) && (a <= 50) || (a != 0);
+    }
+}
+
+// Program 5: Error Diagnostics Test
+// Expected error at line 48, column 9: invalid character '@'
+class ErrorSample {
+    void badChar() {
+        int @bad = 100;
+    }
+}
