@@ -1,7 +1,12 @@
 from .token_type import TokenType
 from .token import Token
 from .errors import LexicalError
-from .cursor import SourceCursor
+from .cursor import (
+    SourceCursor,
+    FileCursor,
+    StringCursor,
+    skip_whitespace_and_comments,
+)
 from .conventions import KEYWORDS, OPERATORS, DELIMITERS
 
 __all__ = [
@@ -9,6 +14,9 @@ __all__ = [
     "Token",
     "LexicalError",
     "SourceCursor",
+    "FileCursor",
+    "StringCursor",
+    "skip_whitespace_and_comments",
     "KEYWORDS",
     "OPERATORS",
     "DELIMITERS",

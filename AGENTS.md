@@ -134,7 +134,7 @@ class SourceCursor(ABC):
 | Task | Module | Owner | Status | Deliverables & Responsibilities |
 | :--- | :--- | :--- | :--- | :--- |
 | **Task 1** | Setup & Core Contracts | Karim Bassem | **DONE** | Frozen `TokenType`, `Token`, `LexicalError`, `SourceCursor`, conventions, repo structure. |
-| **Task 2** | Cursor & Comments Engine | Karim Bassem | **PENDING** | Concrete cursor class implementing `SourceCursor`. Handle line/col tracking and skip whitespace/comments (`//`, `/* */`). |
+| **Task 2** | Cursor & Comments Engine | Karim Bassem | **DONE** | Concrete `FileCursor` / `StringCursor` implementing `SourceCursor`. 1-indexed coordinates, CRLF handling, whitespace & comment skipping (`//`, `/* */`), and unclosed comment diagnostic. |
 | **Task 3** | Words & Literals Scanners | Mahmoud Farag | **PENDING** | Scan identifiers vs keywords (`KEYWORDS` lookup), integers, floats, and strings with escapes. |
 | **Task 4** | Delimiters & Operators | Ali Essam | **PENDING** | Scan 1- and 2-char operators (`==`, `<=`, etc.), delimiters, and emit `LexicalError` for illegal chars. |
 | **Task 5** | Symbol Table Structure | Ahmed Shalaby | **PENDING** | Custom hash table / symbol table to store identifiers, handle collisions, and store token metadata. |
