@@ -1,4 +1,9 @@
-import os
+import sys
+from pathlib import Path
+
+# Add project root to sys.path so it runs directly or with -m
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
 from src.cursor import FileCursor, StringCursor, skip_whitespace_and_comments
 from src.errors import LexicalError
 
