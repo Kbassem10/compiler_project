@@ -12,11 +12,12 @@ compiler_project/
 │   ├── token_type.py   # Enum of all 31 token types
 │   ├── token.py        # Token class (type, lexeme, line, column)
 │   ├── errors.py       # LexicalError class (message, line, column)
-│   ├── cursor.py       # SourceCursor abstract interface
+│   ├── cursor.py       # SourceCursor interface & FileCursor / StringCursor
 │   ├── conventions.py  # Keywords, operators, and delimiters maps
 │   └── main.py         # Entry point (prints nothing, exits 0)
 ├── tests/
-│   └── test_programs.txt # Sample input programs
+│   ├── test_programs.txt # Sample input programs
+│   └── test_task2.py     # Task 2 cursor & comments test suite
 ├── docs/               # Documentation & notes
 ├── README.md
 └── AGENTS.md
@@ -81,7 +82,7 @@ Abstract interface to traverse the source code character by character:
 ## Team Tasks
 
 - **Task 1:** Setup & Contracts (Karim) - *Done*
-- **Task 2:** Cursor & Comments (Karim)
+- **Task 2:** Cursor & Comments (Karim) - *Done*
 - **Task 3:** Words, Numbers & Strings (Mahmoud)
 - **Task 4:** Delimiters & Operators (Ali)
 - **Task 5:** Symbol Table (Ahmed)
