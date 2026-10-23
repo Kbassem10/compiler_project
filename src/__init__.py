@@ -8,6 +8,7 @@ from .cursor import (
     skip_whitespace_and_comments,
 )
 from .conventions import KEYWORDS, OPERATORS, DELIMITERS
+from .scanner_delimiters import scan_operator_or_delimiter
 
 __all__ = [
     "TokenType",
@@ -20,4 +21,5 @@ __all__ = [
     "KEYWORDS",
     "OPERATORS",
     "DELIMITERS",
+    "scan_operator_or_delimiter",
 ]
