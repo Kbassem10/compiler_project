@@ -136,7 +136,7 @@ class SourceCursor(ABC):
 | **Task 1** | Setup & Core Contracts | Karim Bassem | **DONE** | Frozen `TokenType`, `Token`, `LexicalError`, `SourceCursor`, conventions, repo structure. |
 | **Task 2** | Cursor & Comments Engine | Karim Bassem | **DONE** | Concrete `FileCursor` / `StringCursor` implementing `SourceCursor`. 1-indexed coordinates, CRLF handling, whitespace & comment skipping (`//`, `/* */`), and unclosed comment diagnostic. |
 | **Task 3** | Words & Literals Scanners | Mahmoud Farag | **PENDING** | Scan identifiers vs keywords (`KEYWORDS` lookup), integers, floats, and strings with escapes. |
-| **Task 4** | Delimiters & Operators | Ali Essam | **PENDING** | Scan 1- and 2-char operators (`==`, `<=`, etc.), delimiters, and emit `LexicalError` for illegal chars. |
+| **Task 4** | Delimiters & Operators | Ali Essam | **DONE** | `src/scanner_delimiters.py` — `scan_operator_or_delimiter(cursor)` returns `Token \| LexicalError`. Matches 2-char ops (`==`, `!=`, `<=`, `>=`) before 1-char ops, then delimiters, fallback emits `LexicalError` for illegal chars and advances past them. |
 | **Task 5** | Symbol Table Structure | Ahmed Shalaby | **PENDING** | Custom hash table / symbol table to store identifiers, handle collisions, and store token metadata. |
 | **Task 6** | CLI Driver & Formatter | Omar Walid | **PENDING** | Command-line interface to read source files, format token tables, and print errors. |
 | **Task 7** | Lexer Pipeline Integration | Karim Bassem | **PENDING** | Main scanner loop coordinating cursor, sub-scanners, symbol table, and error list into `(tokens, errors)`. |
