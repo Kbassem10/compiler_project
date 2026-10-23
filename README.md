@@ -14,10 +14,13 @@ compiler_project/
 │   ├── errors.py       # LexicalError class (message, line, column)
 │   ├── cursor.py       # SourceCursor interface & FileCursor / StringCursor
 │   ├── conventions.py  # Keywords, operators, and delimiters maps
-│   └── main.py         # Entry point (prints nothing, exits 0)
+│   ├── scanners.py     # Task 3 word, number & string sub-scanners
+│   ├── main.py         # Entry point (prints nothing, exits 0)
+│   └── __main__.py     # Lets the package run with `python -m src`
 ├── tests/
 │   ├── test_programs.txt # Sample input programs
-│   └── test_task2.py     # Task 2 cursor & comments test suite
+│   ├── test_task2.py     # Task 2 cursor & comments test suite
+│   └── test_task3.py     # Task 3 scanners test suite
 ├── docs/               # Documentation & notes
 ├── README.md
 └── AGENTS.md
@@ -27,11 +30,15 @@ compiler_project/
 
 ## How to Run
 
-Make sure you have Python 3.10+ installed:
+Make sure you have Python 3.10+ installed (on Windows use `python`, not `python3`):
 
 ```bash
-# Run empty project
-python3 -m src.main
+# Run entrypoint (prints nothing yet)
+python -m src
+
+# Run tests (-X utf8 is needed on Windows consoles)
+python -X utf8 tests/test_task2.py
+python -X utf8 -m tests.test_task3
 ```
 
 ---
@@ -83,7 +90,7 @@ Abstract interface to traverse the source code character by character:
 
 - **Task 1:** Setup & Contracts (Karim) - *Done*
 - **Task 2:** Cursor & Comments (Karim) - *Done*
-- **Task 3:** Words, Numbers & Strings (Mahmoud)
+- **Task 3:** Words, Numbers & Strings (Mahmoud) - *Done*
 - **Task 4:** Delimiters & Operators (Ali)
 - **Task 5:** Symbol Table (Ahmed)
 - **Task 6:** CLI Driver & Formatter (Omar)
