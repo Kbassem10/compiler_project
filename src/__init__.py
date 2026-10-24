@@ -9,6 +9,7 @@ from .cursor import (
 )
 from .conventions import KEYWORDS, OPERATORS, DELIMITERS
 from .scanner_delimiters import scan_operator_or_delimiter
+from .symbol_table import SymbolTable, SymbolEntry
 
 __all__ = [
     "TokenType",
@@ -22,4 +23,6 @@ __all__ = [
     "OPERATORS",
     "DELIMITERS",
     "scan_operator_or_delimiter",
+    "SymbolTable",
+    "SymbolEntry",
 ]
