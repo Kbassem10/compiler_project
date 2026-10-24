@@ -137,7 +137,7 @@ class SourceCursor(ABC):
 | **Task 2** | Cursor & Comments Engine | Karim Bassem | **DONE** | Concrete `FileCursor` / `StringCursor` implementing `SourceCursor`. 1-indexed coordinates, CRLF handling, whitespace & comment skipping (`//`, `/* */`), and unclosed comment diagnostic. |
 | **Task 3** | Words & Literals Scanners | Mahmoud Farag | **DONE** | `src/scanners.py`: `scan_word_or_number_or_string()` dispatches to `scan_word`, `scan_number_or_invalid_id`, `scan_string`. Returns `Token`, `LexicalError`, or `None` (no match). |
 | **Task 4** | Delimiters & Operators | Ali Essam | **DONE** | `src/scanner_delimiters.py` — `scan_operator_or_delimiter(cursor)` returns `Token \| LexicalError`. Matches 2-char ops (`==`, `!=`, `<=`, `>=`) before 1-char ops, then delimiters, fallback emits `LexicalError` for illegal chars and advances past them. |
-| **Task 5** | Symbol Table Structure | Ahmed Shalaby | **PENDING** | Custom hash table / symbol table to store identifiers, handle collisions, and store token metadata. |
+| **Task 5** | Symbol Table Structure | Ahmed Shalaby | **DONE** | `src/symbol_table.py`: `SymbolTable` (101 buckets, polynomial hash with multiplier 31, separate chaining). `insert(token, type=None, scope=None)` adds a new `SymbolEntry` or appends `(line, column)` to an existing one; `lookup(name)`, `entries()` (first-seen order), `len()`. |
 | **Task 6** | CLI Driver & Formatter | Omar Walid | **PENDING** | Command-line interface to read source files, format token tables, and print errors. |
 | **Task 7** | Lexer Pipeline Integration | Karim Bassem | **PENDING** | Main scanner loop coordinating cursor, sub-scanners, symbol table, and error list into `(tokens, errors)`. |
 | **Task 8** | Verification & QA | All | **PENDING** | Run test corpus (`tests/test_programs.txt`), verify line/column accuracy, and test edge cases. |
@@ -185,6 +185,7 @@ python -m py_compile src/*.py
 # Tests (plain scripts, no pytest)
 python -X utf8 tests/test_task2.py
 python -X utf8 -m tests.test_task3
+python -X utf8 tests/test_task5.py
 ```
 
 ---
@@ -195,4 +196,5 @@ python -X utf8 -m tests.test_task3
 - **Windows console:** `-X utf8` is required, or the ✅ prints raise `UnicodeEncodeError`.
 - **`test_task3.py` must run with `-m`:** running it as a file path fails with `ModuleNotFoundError: No module named 'src'`.
 - **`StringCursor` is an alias:** `StringCursor = FileCursor` in `src/cursor.py`. `test_task3.py` defines its own mock with the same name.
+- **Hash multiplier must differ from the table size:** with size 31 and multiplier 31, `h * 31 % 31 == 0`, so the hash only sees the last letter (`count`, `limit`, `result` all collide). The default size is 101 for this reason.
 - **Task 3 goes beyond the frozen contract (confirm with the team):** `scan_string` accepts single-quoted `'...'` as `STRING`, and `scan_number_or_invalid_id` emits an "invalid identifier" `LexicalError` for inputs like `1name`.
