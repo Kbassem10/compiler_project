@@ -114,7 +114,7 @@ class FileCursor(SourceCursor):
                     self.advance()
                 if not closed:
                     return LexicalError(
-                        f"Error: unclosed block comment starting at line {start_line}, column {start_col}.",
+                        f"Error: unclosed comment starting at line {start_line}, column {start_col}.",
                         line=start_line,
                         column=start_col,
                     )
@@ -157,7 +157,7 @@ def skip_whitespace_and_comments(cursor: SourceCursor) -> LexicalError | None:
                 cursor.advance()
             if not closed:
                 return LexicalError(
-                    f"Error: unclosed block comment starting at line {start_line}, column {start_col}.",
+                    f"Error: unclosed comment starting at line {start_line}, column {start_col}.",
                     line=start_line,
                     column=start_col,
                 )

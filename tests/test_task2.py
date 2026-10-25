@@ -1,4 +1,6 @@
+import os
 import sys
+import tempfile
 from pathlib import Path
 
 # Add project root to sys.path so it runs directly or with -m
@@ -161,7 +163,7 @@ def test_unclosed_block_comment():
     assert isinstance(err, LexicalError)
     assert err.line == 1
     assert err.column == 1
-    assert "unclosed block comment" in err.message
+    assert "unclosed comment" in err.message
     assert cursor.isAtEnd()
 
     # Unclosed comment starting on line 3
@@ -182,8 +184,12 @@ def test_slash_operator_not_consumed():
 
 
 def test_from_file(tmp_path=None):
-    filepath = "tests/test_programs.txt"
-    cursor = FileCursor.from_file(filepath)
+    # Own temp file, so this test does not depend on the test corpus layout
+    with tempfile.TemporaryDirectory() as tmp:
+        filepath = os.path.join(tmp, "prog.java")
+        with open(filepath, "w", encoding="utf-8") as f:
+            f.write("// header comment\n/* block */\nclass A { }")
+        cursor = FileCursor.from_file(filepath)
     err = cursor.skip_whitespace_and_comments()
     assert err is None
     # First non-comment/whitespace code is 'class'
