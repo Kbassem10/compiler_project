@@ -1,0 +1,18 @@
+Lexeme: int, Token: INT
+Lexeme: a, Token: IDENTIFIER
+Error: invalid character '@' at line 1, column 7.
+Lexeme: 1, Token: NUMBER
+Lexeme: ;, Token: SEMICOLON
+Lexeme: int, Token: INT
+Error: invalid identifier '1name' at line 2, column 5.
+Lexeme: ;, Token: SEMICOLON
+Lexeme: String, Token: STRING_TYPE
+Lexeme: s, Token: IDENTIFIER
+Lexeme: =, Token: ASSIGN
+Error: unclosed string literal starting at line 3, column 12.
+Error: unclosed comment starting at line 4, column 1.
+Lexeme: EOF, Token: EOF
+
+Symbol Table
+Index: 0, Name: a, Occurrences: 1:5
+Index: 1, Name: s, Occurrences: 3:8

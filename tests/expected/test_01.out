@@ -1,0 +1,27 @@
+Lexeme: class, Token: CLASS
+Lexeme: Test, Token: IDENTIFIER
+Lexeme: {, Token: LCUR
+Lexeme: public, Token: PUBLIC
+Lexeme: static, Token: STATIC
+Lexeme: void, Token: VOID
+Lexeme: main, Token: MAIN
+Lexeme: (, Token: LPAR
+Lexeme: String, Token: STRING_TYPE
+Lexeme: [, Token: LSQU
+Lexeme: ], Token: RSQU
+Lexeme: args, Token: IDENTIFIER
+Lexeme: ), Token: RPAR
+Lexeme: {, Token: LCUR
+Lexeme: int, Token: INT
+Lexeme: x, Token: IDENTIFIER
+Lexeme: =, Token: ASSIGN
+Lexeme: 10, Token: NUMBER
+Lexeme: ;, Token: SEMICOLON
+Lexeme: }, Token: RCUR
+Lexeme: }, Token: RCUR
+Lexeme: EOF, Token: EOF
+
+Symbol Table
+Index: 0, Name: Test, Occurrences: 1:7
+Index: 1, Name: args, Occurrences: 2:38
+Index: 2, Name: x, Occurrences: 3:13

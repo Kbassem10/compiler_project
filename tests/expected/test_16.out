@@ -1,0 +1,18 @@
+Lexeme: 0, Token: NUMBER
+Lexeme: 10, Token: NUMBER
+Lexeme: 25.5, Token: NUMBER
+Lexeme: 007, Token: NUMBER
+Lexeme: 3, Token: NUMBER
+Lexeme: ., Token: DOT
+Lexeme: ., Token: DOT
+Lexeme: 5, Token: NUMBER
+Lexeme: 1.2, Token: NUMBER
+Lexeme: ., Token: DOT
+Lexeme: 3, Token: NUMBER
+Lexeme: x1, Token: IDENTIFIER
+Lexeme: _count, Token: IDENTIFIER
+Lexeme: EOF, Token: EOF
+
+Symbol Table
+Index: 0, Name: x1, Occurrences: 1:27
+Index: 1, Name: _count, Occurrences: 1:30

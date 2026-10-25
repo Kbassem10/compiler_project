@@ -1,0 +1,8 @@
+Error: invalid identifier '1name' at line 1, column 1.
+Lexeme: =, Token: ASSIGN
+Lexeme: 5, Token: NUMBER
+Lexeme: ;, Token: SEMICOLON
+Lexeme: EOF, Token: EOF
+
+Symbol Table
+(empty)

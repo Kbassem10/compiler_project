@@ -1,0 +1,8 @@
+Lexeme: String, Token: STRING_TYPE
+Lexeme: name, Token: IDENTIFIER
+Lexeme: =, Token: ASSIGN
+Error: unclosed string literal starting at line 1, column 15.
+Lexeme: EOF, Token: EOF
+
+Symbol Table
+Index: 0, Name: name, Occurrences: 1:8
