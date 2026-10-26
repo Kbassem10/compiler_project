@@ -1,0 +1,11 @@
+Lexeme: int, Token: INT
+Lexeme: x, Token: IDENTIFIER
+Lexeme: =, Token: ASSIGN
+Lexeme: 10, Token: NUMBER
+Error: invalid character '@' at line 1, column 12.
+Lexeme: 5, Token: NUMBER
+Lexeme: ;, Token: SEMICOLON
+Lexeme: EOF, Token: EOF
+
+Symbol Table
+Index: 0, Name: x, Occurrences: 1:5

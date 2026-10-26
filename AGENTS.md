@@ -138,8 +138,8 @@ class SourceCursor(ABC):
 | **Task 3** | Words & Literals Scanners | Mahmoud Farag | **DONE** | `src/scanners.py`: `scan_word_or_number_or_string()` dispatches to `scan_word`, `scan_number_or_invalid_id`, `scan_string`. Returns `Token`, `LexicalError`, or `None` (no match). |
 | **Task 4** | Delimiters & Operators | Ali Essam | **DONE** | `src/scanner_delimiters.py` — `scan_operator_or_delimiter(cursor)` returns `Token \| LexicalError`. Matches 2-char ops (`==`, `!=`, `<=`, `>=`) before 1-char ops, then delimiters, fallback emits `LexicalError` for illegal chars and advances past them. |
 | **Task 5** | Symbol Table Structure | Ahmed Shalaby | **DONE** | `src/symbol_table.py`: `SymbolTable` (101 buckets, polynomial hash with multiplier 31, separate chaining). `insert(token, type=None, scope=None)` adds a new `SymbolEntry` or appends `(line, column)` to an existing one; `lookup(name)`, `entries()` (first-seen order), `len()`. |
-| **Task 6** | CLI Driver & Formatter | Omar Walid | **PENDING** | Command-line interface to read source files, format token tables, and print errors. |
-| **Task 7** | Lexer Pipeline Integration | Karim Bassem | **PENDING** | Main scanner loop coordinating cursor, sub-scanners, symbol table, and error list into `(tokens, errors)`. |
+| **Task 6** | CLI Driver & Formatter | Omar Walid | **DONE** | `src/main.py`: `main(argv)` CLI (`python -m src <file> [-o out] [--strict]`), file errors print one line and exit 1, lexical errors exit 0 (1 with `--strict`). `src/formatter.py`: `format_token`, `format_symbol_table`, `format_output(tokens, errors, table)` merges tokens and errors by `(line, column)` so errors print inline, then a `Symbol Table` section. `tests/test_programs.txt` (16 `### TEST NN: label` cases), `tests/expected/test_NN.out`, `tests/verify.py` (PASS/FAIL + unified diff), `tests/test_task6.py`. |
+| **Task 7** | Lexer Pipeline Integration | Karim Bassem | **PENDING** | Main scanner loop coordinating cursor, sub-scanners, symbol table, and error list into `(tokens, errors)`. A minimal loop already exists in `src/lexer.py` (`tokenize(source) -> (tokens, errors, symbol_table)`, added by Task 6 so the CLI runs); Task 7 owns it and may extend or replace it. |
 | **Task 8** | Verification & QA | All | **PENDING** | Run test corpus (`tests/test_programs.txt`), verify line/column accuracy, and test edge cases. |
 | **Task 9** | Report & Final Submission | All | **PENDING** | Final documentation, code cleanup, and submission packaging. |
 
@@ -165,9 +165,15 @@ class SourceCursor(ABC):
 ### When implementing Task 5 (Symbol Table):
 - Create a simple, understandable hash table or dictionary wrapper that stores identifier occurrences, types, and scope attributes without excessive complexity.
 
-### When implementing Task 6 (CLI Driver):
-- Expand `src/main.py` to accept a file argument: `python -m src <path_to_source.java>`.
-- Print cleanly formatted token stream and any lexical errors.
+### Output format (Task 6, done):
+- One line per token: `Lexeme: <val>, Token: <TYPE>`; EOF prints as `Lexeme: EOF, Token: EOF`.
+- Errors print their `message` on their own line at their source position.
+- After the token stream: a blank line, `Symbol Table`, then `Index: N, Name: x, Occurrences: line:col, ...` (or `(empty)`).
+
+### Adding a test case (Task 8):
+1. Append `### TEST NN: label` and the program to `tests/test_programs.txt` (line numbers restart at 1 inside each case).
+2. Run `python tests/verify.py --write-missing` to create `tests/expected/test_NN.out`.
+3. Review that file by hand (someone other than the author), then commit both.
 
 ---
 
@@ -176,8 +182,10 @@ class SourceCursor(ABC):
 Use `python` (not `python3`) on Windows.
 
 ```bash
-# Run compiler entrypoint (currently exits 0, prints nothing)
-python -m src
+# Run the lexer on a file (prints tokens, inline errors, then the symbol table)
+python -m src path/to/program.java
+python -m src program.java -o result.txt   # write to a file
+python -m src program.java --strict        # exit 1 if lexical errors were found
 
 # Quick syntax check
 python -m py_compile src/*.py
@@ -186,6 +194,10 @@ python -m py_compile src/*.py
 python -X utf8 tests/test_task2.py
 python -X utf8 -m tests.test_task3
 python -X utf8 tests/test_task5.py
+python -X utf8 tests/test_task6.py
+
+# Golden-output check of every case in tests/test_programs.txt
+python tests/verify.py
 ```
 
 ---
@@ -197,4 +209,7 @@ python -X utf8 tests/test_task5.py
 - **`test_task3.py` must run with `-m`:** running it as a file path fails with `ModuleNotFoundError: No module named 'src'`.
 - **`StringCursor` is an alias:** `StringCursor = FileCursor` in `src/cursor.py`. `test_task3.py` defines its own mock with the same name.
 - **Hash multiplier must differ from the table size:** with size 31 and multiplier 31, `h * 31 % 31 == 0`, so the hash only sees the last letter (`count`, `limit`, `result` all collide). The default size is 101 for this reason.
+- **Spec alignment done in Task 6:** the unclosed block comment message is now `Error: unclosed comment starting at line L, column C.` (as in the PDF), and `scan_string` stops at the end of the line, so an unclosed string no longer swallows the rest of the file.
+- **`true` / `false` are still `IDENTIFIER`:** the PDF says they should be literal tokens, but the frozen `TokenType` has no member for them. Team decision needed.
+- **`tests/test_programs.txt` starts with `### TEST` markers:** running the CLI on the whole file reports `#` as illegal characters; use `tests/verify.py`, which splits it into cases.
 - **Task 3 goes beyond the frozen contract (confirm with the team):** `scan_string` accepts single-quoted `'...'` as `STRING`, and `scan_number_or_invalid_id` emits an "invalid identifier" `LexicalError` for inputs like `1name`.

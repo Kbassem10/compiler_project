@@ -1,0 +1,70 @@
+Lexeme: class, Token: CLASS
+Lexeme: ErrorSample, Token: IDENTIFIER
+Lexeme: {, Token: LCUR
+Lexeme: void, Token: VOID
+Lexeme: badChar, Token: IDENTIFIER
+Lexeme: (, Token: LPAR
+Lexeme: ), Token: RPAR
+Lexeme: {, Token: LCUR
+Lexeme: int, Token: INT
+Error: invalid character '@' at line 3, column 13.
+Lexeme: bad, Token: IDENTIFIER
+Lexeme: =, Token: ASSIGN
+Lexeme: 100, Token: NUMBER
+Lexeme: ;, Token: SEMICOLON
+Lexeme: boolean, Token: BOOLEAN
+Lexeme: ok, Token: IDENTIFIER
+Lexeme: =, Token: ASSIGN
+Lexeme: (, Token: LPAR
+Lexeme: a, Token: IDENTIFIER
+Lexeme: >=, Token: LOGOP
+Lexeme: 10, Token: NUMBER
+Lexeme: ), Token: RPAR
+Error: invalid character '&' at line 4, column 32.
+Error: invalid character '&' at line 4, column 33.
+Lexeme: (, Token: LPAR
+Lexeme: b, Token: IDENTIFIER
+Lexeme: !=, Token: LOGOP
+Lexeme: 0, Token: NUMBER
+Lexeme: ), Token: RPAR
+Error: invalid character '|' at line 4, column 44.
+Error: invalid character '|' at line 4, column 45.
+Lexeme: c, Token: IDENTIFIER
+Lexeme: ;, Token: SEMICOLON
+Lexeme: int, Token: INT
+Error: invalid identifier '2x' at line 5, column 13.
+Lexeme: =, Token: ASSIGN
+Lexeme: 5, Token: NUMBER
+Lexeme: ;, Token: SEMICOLON
+Lexeme: int, Token: INT
+Lexeme: y, Token: IDENTIFIER
+Lexeme: =, Token: ASSIGN
+Lexeme: 3, Token: NUMBER
+Error: invalid character '#' at line 5, column 31.
+Lexeme: 4, Token: NUMBER
+Lexeme: ;, Token: SEMICOLON
+Lexeme: String, Token: STRING_TYPE
+Lexeme: msg, Token: IDENTIFIER
+Lexeme: =, Token: ASSIGN
+Lexeme: "ok", Token: STRING
+Lexeme: ;, Token: SEMICOLON
+Lexeme: char, Token: CHAR
+Lexeme: q, Token: IDENTIFIER
+Lexeme: =, Token: ASSIGN
+Error: invalid character '$' at line 6, column 37.
+Lexeme: ;, Token: SEMICOLON
+Lexeme: }, Token: RCUR
+Lexeme: }, Token: RCUR
+Lexeme: EOF, Token: EOF
+
+Symbol Table
+Index: 0, Name: ErrorSample, Occurrences: 1:7
+Index: 1, Name: badChar, Occurrences: 2:10
+Index: 2, Name: bad, Occurrences: 3:14
+Index: 3, Name: ok, Occurrences: 4:17
+Index: 4, Name: a, Occurrences: 4:23
+Index: 5, Name: b, Occurrences: 4:36
+Index: 6, Name: c, Occurrences: 4:47
+Index: 7, Name: y, Occurrences: 5:25
+Index: 8, Name: msg, Occurrences: 6:16
+Index: 9, Name: q, Occurrences: 6:33

@@ -1,0 +1,62 @@
+Lexeme: a, Token: IDENTIFIER
+Lexeme: =, Token: ASSIGN
+Lexeme: b, Token: IDENTIFIER
+Lexeme: ==, Token: LOGOP
+Lexeme: c, Token: IDENTIFIER
+Lexeme: !=, Token: LOGOP
+Lexeme: d, Token: IDENTIFIER
+Lexeme: <, Token: LOGOP
+Lexeme: e, Token: IDENTIFIER
+Lexeme: >, Token: LOGOP
+Lexeme: f, Token: IDENTIFIER
+Lexeme: <=, Token: LOGOP
+Lexeme: g, Token: IDENTIFIER
+Lexeme: >=, Token: LOGOP
+Lexeme: h, Token: IDENTIFIER
+Lexeme: +, Token: MATHOP
+Lexeme: i, Token: IDENTIFIER
+Lexeme: -, Token: MATHOP
+Lexeme: j, Token: IDENTIFIER
+Lexeme: *, Token: MATHOP
+Lexeme: k, Token: IDENTIFIER
+Lexeme: /, Token: MATHOP
+Lexeme: l, Token: IDENTIFIER
+Lexeme: ;, Token: SEMICOLON
+Lexeme: (, Token: LPAR
+Lexeme: ), Token: RPAR
+Lexeme: {, Token: LCUR
+Lexeme: }, Token: RCUR
+Lexeme: [, Token: LSQU
+Lexeme: ], Token: RSQU
+Lexeme: ;, Token: SEMICOLON
+Lexeme: ,, Token: COMMA
+Lexeme: ., Token: DOT
+Lexeme: x, Token: IDENTIFIER
+Lexeme: <=, Token: LOGOP
+Lexeme: y, Token: IDENTIFIER
+Lexeme: >=, Token: LOGOP
+Lexeme: z, Token: IDENTIFIER
+Lexeme: ==, Token: LOGOP
+Lexeme: w, Token: IDENTIFIER
+Lexeme: !=, Token: LOGOP
+Lexeme: v, Token: IDENTIFIER
+Lexeme: EOF, Token: EOF
+
+Symbol Table
+Index: 0, Name: a, Occurrences: 1:1
+Index: 1, Name: b, Occurrences: 1:5
+Index: 2, Name: c, Occurrences: 1:10
+Index: 3, Name: d, Occurrences: 1:15
+Index: 4, Name: e, Occurrences: 1:19
+Index: 5, Name: f, Occurrences: 1:23
+Index: 6, Name: g, Occurrences: 1:28
+Index: 7, Name: h, Occurrences: 1:33
+Index: 8, Name: i, Occurrences: 1:37
+Index: 9, Name: j, Occurrences: 1:41
+Index: 10, Name: k, Occurrences: 1:45
+Index: 11, Name: l, Occurrences: 1:49
+Index: 12, Name: x, Occurrences: 3:1
+Index: 13, Name: y, Occurrences: 3:4
+Index: 14, Name: z, Occurrences: 3:7
+Index: 15, Name: w, Occurrences: 3:10
+Index: 16, Name: v, Occurrences: 3:13

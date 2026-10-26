@@ -79,13 +79,14 @@ def scan_string(cursor: SourceCursor) -> Token | LexicalError:
     quote_char = cursor.advance()  # Consume opening quote (' or ")
     lexeme = [quote_char]
 
-    while not cursor.isAtEnd() and cursor.peek() != quote_char:
+    # A string cannot span lines, so stop at the end of the line too
+    while not cursor.isAtEnd() and cursor.peek() not in (quote_char, '\n', '\r'):
         # Handle escape characters like \" or \n if present
-        if cursor.peek() == '\\' and cursor.peekNext() != '\0':
+        if cursor.peek() == '\\' and cursor.peekNext() not in ('\0', '\n', '\r'):
             lexeme.append(cursor.advance())
         lexeme.append(cursor.advance())
 
-    if cursor.isAtEnd():
+    if cursor.peek() != quote_char:
         return LexicalError(
             message=f"Error: unclosed string literal starting at line {line}, column {col}.",
             line=line,

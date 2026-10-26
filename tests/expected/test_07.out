@@ -1,0 +1,18 @@
+Lexeme: class, Token: CLASS
+Lexeme: Class, Token: IDENTIFIER
+Lexeme: CLASS, Token: IDENTIFIER
+Lexeme: String, Token: STRING_TYPE
+Lexeme: string, Token: IDENTIFIER
+Lexeme: STRING, Token: IDENTIFIER
+Lexeme: main, Token: MAIN
+Lexeme: Main, Token: IDENTIFIER
+Lexeme: MAIN, Token: IDENTIFIER
+Lexeme: EOF, Token: EOF
+
+Symbol Table
+Index: 0, Name: Class, Occurrences: 1:7
+Index: 1, Name: CLASS, Occurrences: 1:13
+Index: 2, Name: string, Occurrences: 2:8
+Index: 3, Name: STRING, Occurrences: 2:15
+Index: 4, Name: Main, Occurrences: 3:6
+Index: 5, Name: MAIN, Occurrences: 3:11

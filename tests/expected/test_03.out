@@ -1,0 +1,55 @@
+Lexeme: class, Token: CLASS
+Lexeme: Types, Token: IDENTIFIER
+Lexeme: {, Token: LCUR
+Lexeme: int, Token: INT
+Lexeme: count, Token: IDENTIFIER
+Lexeme: =, Token: ASSIGN
+Lexeme: 0, Token: NUMBER
+Lexeme: ;, Token: SEMICOLON
+Lexeme: float, Token: FLOAT
+Lexeme: ratio, Token: IDENTIFIER
+Lexeme: =, Token: ASSIGN
+Lexeme: 3.14, Token: NUMBER
+Lexeme: ;, Token: SEMICOLON
+Lexeme: boolean, Token: BOOLEAN
+Lexeme: ready, Token: IDENTIFIER
+Lexeme: ;, Token: SEMICOLON
+Lexeme: char, Token: CHAR
+Lexeme: initial, Token: IDENTIFIER
+Lexeme: =, Token: ASSIGN
+Lexeme: 'K', Token: STRING
+Lexeme: ;, Token: SEMICOLON
+Lexeme: String, Token: STRING_TYPE
+Lexeme: greeting, Token: IDENTIFIER
+Lexeme: =, Token: ASSIGN
+Lexeme: "Hello, Mini Java: welcome!", Token: STRING
+Lexeme: ;, Token: SEMICOLON
+Lexeme: int, Token: INT
+Lexeme: [, Token: LSQU
+Lexeme: ], Token: RSQU
+Lexeme: marks, Token: IDENTIFIER
+Lexeme: =, Token: ASSIGN
+Lexeme: new, Token: IDENTIFIER
+Lexeme: int, Token: INT
+Lexeme: [, Token: LSQU
+Lexeme: 5, Token: NUMBER
+Lexeme: ], Token: RSQU
+Lexeme: ;, Token: SEMICOLON
+Lexeme: String, Token: STRING_TYPE
+Lexeme: empty, Token: IDENTIFIER
+Lexeme: =, Token: ASSIGN
+Lexeme: "", Token: STRING
+Lexeme: ;, Token: SEMICOLON
+Lexeme: }, Token: RCUR
+Lexeme: EOF, Token: EOF
+
+Symbol Table
+Index: 0, Name: Types, Occurrences: 1:7
+Index: 1, Name: count, Occurrences: 2:9
+Index: 2, Name: ratio, Occurrences: 3:11
+Index: 3, Name: ready, Occurrences: 4:13
+Index: 4, Name: initial, Occurrences: 5:10
+Index: 5, Name: greeting, Occurrences: 6:12
+Index: 6, Name: marks, Occurrences: 7:11
+Index: 7, Name: new, Occurrences: 7:19
+Index: 8, Name: empty, Occurrences: 8:12

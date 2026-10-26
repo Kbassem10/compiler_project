@@ -1,0 +1,48 @@
+Lexeme: class, Token: CLASS
+Lexeme: Student, Token: IDENTIFIER
+Lexeme: {, Token: LCUR
+Lexeme: public, Token: PUBLIC
+Lexeme: static, Token: STATIC
+Lexeme: void, Token: VOID
+Lexeme: main, Token: MAIN
+Lexeme: (, Token: LPAR
+Lexeme: ), Token: RPAR
+Lexeme: {, Token: LCUR
+Lexeme: int, Token: INT
+Lexeme: age, Token: IDENTIFIER
+Lexeme: =, Token: ASSIGN
+Lexeme: 20, Token: NUMBER
+Lexeme: ;, Token: SEMICOLON
+Lexeme: float, Token: FLOAT
+Lexeme: grade, Token: IDENTIFIER
+Lexeme: =, Token: ASSIGN
+Lexeme: 85.5, Token: NUMBER
+Lexeme: ;, Token: SEMICOLON
+Lexeme: String, Token: STRING_TYPE
+Lexeme: name, Token: IDENTIFIER
+Lexeme: =, Token: ASSIGN
+Lexeme: "Ali", Token: STRING
+Lexeme: ;, Token: SEMICOLON
+Lexeme: if, Token: IF
+Lexeme: (, Token: LPAR
+Lexeme: grade, Token: IDENTIFIER
+Lexeme: >=, Token: LOGOP
+Lexeme: 50, Token: NUMBER
+Lexeme: ), Token: RPAR
+Lexeme: {, Token: LCUR
+Lexeme: grade, Token: IDENTIFIER
+Lexeme: =, Token: ASSIGN
+Lexeme: grade, Token: IDENTIFIER
+Lexeme: +, Token: MATHOP
+Lexeme: 5, Token: NUMBER
+Lexeme: ;, Token: SEMICOLON
+Lexeme: }, Token: RCUR
+Lexeme: }, Token: RCUR
+Lexeme: }, Token: RCUR
+Lexeme: EOF, Token: EOF
+
+Symbol Table
+Index: 0, Name: Student, Occurrences: 1:7
+Index: 1, Name: age, Occurrences: 3:13
+Index: 2, Name: grade, Occurrences: 4:15, 7:13, 8:13, 8:21
+Index: 3, Name: name, Occurrences: 5:16

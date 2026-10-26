@@ -1,24 +1,40 @@
-// ==========================================
-// Mini Java Compiler - Test Programs Corpus
-// Phase 01: Lexical Analysis
-// ==========================================
+Mini Java Compiler - Phase 01 test programs.
+Each test starts with a marker line "### TEST NN: label" and runs until the next marker.
+The expected output of test NN is in tests/expected/test_NN.out.
+Line numbers inside each test start again at 1.
 
-// Program 1: Minimal Valid Class (From Spec)
-class A { }
-
-// Program 2: Standard Class with Main Method and Variable Declarations
-class MainTest {
-    public static void main() {
-        int count = 10;
-        float ratio = 3.14;
-        boolean isActive = true;
-        char initial = 'K';
-        String greeting = "Hello, Mini Java!";
-        return;
+### TEST 01: valid class with main method
+class Test {
+    public static void main(String[] args) {
+        int x = 10; // counter
     }
 }
 
-// Program 3: Control Flow (If / Else / While / For)
+### TEST 02: sample program from the spec
+class Student {
+    public static void main() {
+        int age = 20;
+        float grade = 85.5;
+        String name = "Ali";
+
+        if (grade >= 50) {
+            grade = grade + 5;
+        }
+    }
+}
+
+### TEST 03: every type keyword, arrays and literals
+class Types {
+    int count = 0;
+    float ratio = 3.14;
+    boolean ready;
+    char initial = 'K';
+    String greeting = "Hello, Mini Java: welcome!";
+    int[] marks = new int[5];
+    String empty = "";
+}
+
+### TEST 04: control flow if else while for return
 class ControlFlow {
     void evaluate(int limit) {
         int i = 0;
@@ -32,21 +48,61 @@ class ControlFlow {
         for (i = 0; i <= 10; i = i + 1) {
             limit = limit * 2;
         }
+        return limit;
     }
 }
 
-// Program 4: Operators & Expressions
-class OperatorsTest {
-    void mathAndLogic() {
-        int a = 10 + 20 - 5 * 2 / 1;
-        boolean condition = (a >= 10) && (a <= 50) || (a != 0);
-    }
-}
+### TEST 05: all operators and delimiters
+a = b == c != d < e > f <= g >= h + i - j * k / l;
+( ) { } [ ] ; , .
+x<=y>=z==w!=v
 
-// Program 5: Error Diagnostics Test
-// Expected error at line 48, column 9: invalid character '@'
+### TEST 06: comment edge cases
+/**/
+int a = 1; /* block comment
+   spanning several
+   lines */ int b = 2;
+String s = "// not a comment";
+String t = "/* not a comment either */";
+int c = 3; // line comment at end of file
+
+### TEST 07: case sensitivity
+class Class CLASS
+String string STRING
+main Main MAIN
+
+### TEST 08: error - illegal character
+int x = 10 @ 5;
+
+### TEST 09: error - invalid identifier
+1name = 5;
+
+### TEST 10: error - unclosed string
+String name = "Ali;
+
+### TEST 11: error - unterminated comment
+/* This comment does not end
+
+### TEST 12: the four required errors in one program
+int a @ 1;
+int 1name;
+String s = "Ali;
+/* never closed
+
+### TEST 13: several errors next to valid code
 class ErrorSample {
     void badChar() {
         int @bad = 100;
+        boolean ok = (a >= 10) && (b != 0) || c;
+        int 2x = 5; int y = 3 # 4;
+        String msg = "ok"; char q = $;
     }
 }
+
+### TEST 14: empty program
+
+### TEST 15: very long line
+String text = "abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij"; int n = 1;
+
+### TEST 16: number edge cases
+0 10 25.5 007 3. .5 1.2.3 x1 _count

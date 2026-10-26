@@ -1,0 +1,33 @@
+Lexeme: int, Token: INT
+Lexeme: a, Token: IDENTIFIER
+Lexeme: =, Token: ASSIGN
+Lexeme: 1, Token: NUMBER
+Lexeme: ;, Token: SEMICOLON
+Lexeme: int, Token: INT
+Lexeme: b, Token: IDENTIFIER
+Lexeme: =, Token: ASSIGN
+Lexeme: 2, Token: NUMBER
+Lexeme: ;, Token: SEMICOLON
+Lexeme: String, Token: STRING_TYPE
+Lexeme: s, Token: IDENTIFIER
+Lexeme: =, Token: ASSIGN
+Lexeme: "// not a comment", Token: STRING
+Lexeme: ;, Token: SEMICOLON
+Lexeme: String, Token: STRING_TYPE
+Lexeme: t, Token: IDENTIFIER
+Lexeme: =, Token: ASSIGN
+Lexeme: "/* not a comment either */", Token: STRING
+Lexeme: ;, Token: SEMICOLON
+Lexeme: int, Token: INT
+Lexeme: c, Token: IDENTIFIER
+Lexeme: =, Token: ASSIGN
+Lexeme: 3, Token: NUMBER
+Lexeme: ;, Token: SEMICOLON
+Lexeme: EOF, Token: EOF
+
+Symbol Table
+Index: 0, Name: a, Occurrences: 2:5
+Index: 1, Name: b, Occurrences: 4:17
+Index: 2, Name: s, Occurrences: 5:8
+Index: 3, Name: t, Occurrences: 6:8
+Index: 4, Name: c, Occurrences: 7:5
