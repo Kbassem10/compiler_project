@@ -139,7 +139,7 @@ class SourceCursor(ABC):
 | **Task 4** | Delimiters & Operators | Ali Essam | **DONE** | `src/scanner_delimiters.py` — `scan_operator_or_delimiter(cursor)` returns `Token \| LexicalError`. Matches 2-char ops (`==`, `!=`, `<=`, `>=`) before 1-char ops, then delimiters, fallback emits `LexicalError` for illegal chars and advances past them. |
 | **Task 5** | Symbol Table Structure | Ahmed Shalaby | **DONE** | `src/symbol_table.py`: `SymbolTable` (101 buckets, polynomial hash with multiplier 31, separate chaining). `insert(token, type=None, scope=None)` adds a new `SymbolEntry` or appends `(line, column)` to an existing one; `lookup(name)`, `entries()` (first-seen order), `len()`. |
 | **Task 6** | CLI Driver & Formatter | Omar Walid | **DONE** | `src/main.py`: `main(argv)` CLI (`python -m src <file> [-o out] [--strict]`), file errors print one line and exit 1, lexical errors exit 0 (1 with `--strict`). `src/formatter.py`: `format_token`, `format_symbol_table`, `format_output(tokens, errors, table)` merges tokens and errors by `(line, column)` so errors print inline, then a `Symbol Table` section. `tests/test_programs.txt` (16 `### TEST NN: label` cases), `tests/expected/test_NN.out`, `tests/verify.py` (PASS/FAIL + unified diff), `tests/test_task6.py`. |
-| **Task 7** | Lexer Pipeline Integration | Karim Bassem | **PENDING** | Main scanner loop coordinating cursor, sub-scanners, symbol table, and error list into `(tokens, errors)`. A minimal loop already exists in `src/lexer.py` (`tokenize(source) -> (tokens, errors, symbol_table)`, added by Task 6 so the CLI runs); Task 7 owns it and may extend or replace it. |
+| **Task 7** | Lexer Pipeline Integration | Karim Bassem | **DONE** | `src/lexer.py`: `Lexer(source, on_token=None, on_error=None)` coordinates `SourceCursor`, comments/whitespace skipping, sub-scanners (`scan_word`, `scan_number_or_invalid_id`, `scan_string`, `scan_operator_or_delimiter`), and `SymbolTable`. `getNextToken()` (and alias `get_next_token()`) implements the main dispatch loop with panic-mode recovery; `tokenize()` consumes full input into `(tokens, errors, symbol_table)`. `tests/test_task7.py`. |
 | **Task 8** | Verification & QA | All | **PENDING** | Run test corpus (`tests/test_programs.txt`), verify line/column accuracy, and test edge cases. |
 | **Task 9** | Report & Final Submission | All | **PENDING** | Final documentation, code cleanup, and submission packaging. |
 
@@ -195,6 +195,7 @@ python -X utf8 tests/test_task2.py
 python -X utf8 -m tests.test_task3
 python -X utf8 tests/test_task5.py
 python -X utf8 tests/test_task6.py
+python -X utf8 tests/test_task7.py
 
 # Golden-output check of every case in tests/test_programs.txt
 python tests/verify.py

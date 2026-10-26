@@ -28,7 +28,8 @@ compiler_project/
 │   ├── test_task2.py     # Task 2 cursor & comments test suite
 │   ├── test_task3.py     # Task 3 scanners test suite
 │   ├── test_task5.py     # Task 5 symbol table test suite
-│   └── test_task6.py     # Task 6 CLI & formatter test suite
+│   ├── test_task6.py     # Task 6 CLI & formatter test suite
+│   └── test_task7.py     # Task 7 lexer pipeline integration test suite
 ├── docs/               # Documentation & notes
 ├── README.md
 └── AGENTS.md
@@ -51,6 +52,7 @@ python -X utf8 tests/test_task2.py
 python -X utf8 -m tests.test_task3
 python -X utf8 tests/test_task5.py
 python -X utf8 tests/test_task6.py
+python -X utf8 tests/test_task7.py
 
 # Check every program in tests/test_programs.txt against tests/expected/
 python tests/verify.py

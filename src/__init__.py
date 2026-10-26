@@ -10,6 +10,8 @@ from .cursor import (
 from .conventions import KEYWORDS, OPERATORS, DELIMITERS
 from .scanner_delimiters import scan_operator_or_delimiter
 from .symbol_table import SymbolTable, SymbolEntry
+from .lexer import Lexer, tokenize
+from .formatter import format_token, format_item, format_symbol_table, format_output
 
 __all__ = [
     "TokenType",
@@ -25,4 +27,10 @@ __all__ = [
     "scan_operator_or_delimiter",
     "SymbolTable",
     "SymbolEntry",
+    "Lexer",
+    "tokenize",
+    "format_token",
+    "format_item",
+    "format_symbol_table",
+    "format_output",
 ]
