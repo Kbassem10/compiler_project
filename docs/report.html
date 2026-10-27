@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Mini Java Compiler - Phase 01 Report</title>
+<style>
+  @page { size: A4; margin: 1.4cm 1.6cm; }
+  body { font-family: "Liberation Sans", Arial, sans-serif; font-size: 9pt; line-height: 1.25; }
+  h1, h2 { font-family: "Liberation Sans", Arial, sans-serif; }
+  h1 { font-size: 15pt; margin: 0 0 2pt 0; }
+  h2 { font-size: 11pt; margin: 9pt 0 3pt 0; color: #1f3b6e; border-bottom: 1px solid #1f3b6e; }
+  p, li { margin: 2pt 0; }
+  ul { margin: 2pt 0 2pt 0; }
+  table { border-collapse: collapse; width: 100%; }
+  td, th { border: 1px solid #999999; padding: 2pt 4pt; vertical-align: top; font-size: 8.5pt; }
+  th { background: #e4e9f2; text-align: left; }
+  td.plain { border: none; padding: 0 4pt 0 0; }
+  code, pre { font-family: "Liberation Mono", "Courier New", monospace; font-size: 7.8pt; }
+  pre { margin: 1pt 0; background: #f4f4f4; padding: 3pt; }
+  pre.small { font-size: 7.2pt; }
+  .sub { font-size: 9.5pt; color: #333333; }
+</style>
+</head>
+<body>
+
+<h1>Mini Java Compiler &mdash; Phase 01: Lexical Analyzer</h1>
+<p class="sub"><b>CSCI415 &ndash; Compiler Design, Fall 2026</b> &nbsp;|&nbsp; Team: Karim Bassem Joseph, Mahmoud Farag, Ali Essam, Ahmed Shalaby, Omar Walid</p>
+<p>The scanner is written from scratch in Python 3.10+ using only the standard library (no Lex/regex/parser libraries).
+A <code>SourceCursor</code> reads the source one character at a time and tracks a 1-indexed line and column.
+The main loop skips whitespace and comments, then dispatches on the first character: letter or <code>_</code> &rarr; word scanner,
+digit &rarr; number scanner, quote &rarr; string scanner, anything else &rarr; operator/delimiter scanner (which reports illegal characters).
+Identifiers go into a hash-table symbol table (101 buckets, polynomial hash &times;31, separate chaining) with every <code>line:column</code> where they occur.</p>
+
+<h2>1. Implemented Token Specifications (31 token types)</h2>
+<table border="1" cellspacing="0" cellpadding="3">
+  <tr><th width="17%">Group</th><th>Token type and lexeme / pattern</th></tr>
+  <tr><td>Class keywords</td><td>CLASS <code>class</code> &middot; PUBLIC <code>public</code> &middot; STATIC <code>static</code> &middot; VOID <code>void</code> &middot; MAIN <code>main</code></td></tr>
+  <tr><td>Type keywords</td><td>INT <code>int</code> &middot; FLOAT <code>float</code> &middot; BOOLEAN <code>boolean</code> &middot; CHAR <code>char</code> &middot; STRING_TYPE <code>String</code></td></tr>
+  <tr><td>Control keywords</td><td>IF <code>if</code> &middot; ELSE <code>else</code> &middot; WHILE <code>while</code> &middot; FOR <code>for</code> &middot; RETURN <code>return</code></td></tr>
+  <tr><td>Names</td><td>IDENTIFIER <code>[A-Za-z_][A-Za-z0-9_]*</code> that is not a keyword</td></tr>
+  <tr><td>Literals</td><td>NUMBER <code>[0-9]+(\.[0-9]+)?</code> (e.g. <code>10</code>, <code>25.5</code>) &middot; STRING <code>"..."</code> or <code>'...'</code> on one line, quotes kept in the lexeme, <code>\</code> escapes the next character</td></tr>
+  <tr><td>Operators</td><td>ASSIGN <code>=</code> &middot; MATHOP <code>+ - * /</code> &middot; LOGOP <code>== != &lt; &gt; &lt;= &gt;=</code></td></tr>
+  <tr><td>Delimiters</td><td>LPAR <code>(</code> &middot; RPAR <code>)</code> &middot; LCUR <code>{</code> &middot; RCUR <code>}</code> &middot; LSQU <code>[</code> &middot; RSQU <code>]</code> &middot; SEMICOLON <code>;</code> &middot; COMMA <code>,</code> &middot; DOT <code>.</code></td></tr>
+  <tr><td>Control</td><td>EOF &mdash; emitted once, at the position right after the last character</td></tr>
+</table>
+<ul>
+  <li><b>Case-sensitive:</b> keywords match exactly, so <code>class</code> is CLASS but <code>Class</code> is IDENTIFIER; <code>String</code> is STRING_TYPE while <code>"text"</code> is STRING.</li>
+  <li><b>Longest match:</b> two-character operators (<code>== != &lt;= &gt;=</code>) are tried before one-character ones; words are read completely before the keyword lookup, so <code>classy</code> and <code>integer</code> are identifiers.</li>
+  <li><b>Numbers:</b> a dot belongs to the number only if a digit follows it: <code>3.</code> &rarr; NUMBER <code>3</code> + DOT, and <code>1.2.3</code> &rarr; NUMBER <code>1.2</code>, DOT, NUMBER <code>3</code>.</li>
+  <li><b>Comments and whitespace</b> (<code>//</code> to end of line, <code>/* ... */</code>, spaces, tabs, LF, CRLF) produce no tokens. A tab counts as one column.</li>
+</ul>
+
+<table border="0" cellspacing="0" cellpadding="0"><tr>
+<td class="plain" valign="top" width="30%"><b>Sample input</b>
+<pre class="small">class A {
+  int x = 10; // counter
+  String s = "Hi";
+}</pre></td>
+<td class="plain" valign="top"><b>Output</b> (one line per token, then the symbol table)
+<pre class="small">Lexeme: class, Token: CLASS    Lexeme: ;, Token: SEMICOLON
+Lexeme: A, Token: IDENTIFIER   Lexeme: String, Token: STRING_TYPE
+Lexeme: {, Token: LCUR         Lexeme: s, Token: IDENTIFIER
+Lexeme: int, Token: INT        Lexeme: =, Token: ASSIGN
+Lexeme: x, Token: IDENTIFIER   Lexeme: "Hi", Token: STRING
+Lexeme: =, Token: ASSIGN       Lexeme: ;, Token: SEMICOLON
+Lexeme: 10, Token: NUMBER      Lexeme: }, Token: RCUR
+                               Lexeme: EOF, Token: EOF
+Symbol Table
+Index: 0, Name: A, Occurrences: 1:7
+Index: 1, Name: x, Occurrences: 2:7
+Index: 2, Name: s, Occurrences: 3:10</pre></td>
+</tr></table>
+
+<h2>2. Error Handling &amp; Recovery Architecture</h2>
+<table border="1" cellspacing="0" cellpadding="3">
+  <tr><th width="14%">Error</th><th width="60%">Exact message format</th><th>Skipped before scanning resumes</th></tr>
+  <tr><td>Illegal character</td><td><code><font size="1">Error: invalid character '@' at line L, column C.</font></code></td><td>Only that one character.</td></tr>
+  <tr><td>Invalid identifier</td><td><code><font size="1">Error: invalid identifier '1name' at line L, column C.</font></code></td><td>The whole word (one error).</td></tr>
+  <tr><td>Unclosed string</td><td><code><font size="1">Error: unclosed string literal starting at line L, column C.</font></code></td><td>The rest of that line only.</td></tr>
+  <tr><td>Unterminated comment</td><td><code><font size="1">Error: unclosed comment starting at line L, column C.</font></code></td><td>Everything up to end of file.</td></tr>
+</table>
+<ul>
+  <li><b>Panic-mode recovery:</b> each sub-scanner advances past the bad input before returning a <code>LexicalError</code> object. The main loop stores it and continues with the next character. Nothing is raised, so scanning never stops early and <b>all</b> errors in a file are reported in one run, with every valid token still emitted.</li>
+  <li><b>Collection and ordering:</b> tokens and errors are kept in two lists. The formatter merges them by <code>(line, column)</code>, so each error is printed exactly where it occurred in the source.</li>
+  <li><b>Exit codes:</b> lexical errors are normal output (exit 0, or 1 with <code>--strict</code>); a missing file or directory prints one line and exits 1, never a stack trace.</li>
+</ul>
+<p><b>Error example:</b> <code>int $x = 10 @ 5;</code> &rarr; output:</p>
+<pre class="small">Lexeme: int, Token: INT                            Lexeme: 10, Token: NUMBER
+Error: invalid character '$' at line 1, column 5.  Error: invalid character '@' at line 1, column 13.
+Lexeme: x, Token: IDENTIFIER                       Lexeme: 5, Token: NUMBER
+Lexeme: =, Token: ASSIGN                           Lexeme: ;, Token: SEMICOLON
+                                                   Lexeme: EOF, Token: EOF</pre>
+
+<h2>3. Challenges Faced &amp; Solutions</h2>
+<table border="1" cellspacing="0" cellpadding="3">
+  <tr><th width="24%">Challenge</th><th>How we solved it</th></tr>
+  <tr><td>CRLF position tracking</td><td>Windows files end lines with <code>\r\n</code>; counted naively that is two line breaks and every later line number is wrong. <code>advance()</code> consumes <code>\r\n</code> as one break and resets the column to 1. The same program in LF and CRLF gives identical output.</td></tr>
+  <tr><td><code>/</code> vs. comments</td><td>One character is not enough to decide. The comment skipper looks one character ahead with <code>peekNext()</code>: <code>//</code> and <code>/*</code> start comments, a lone <code>/</code> is left for the operator scanner as MATHOP (<code>5/*c*/6</code> &rarr; NUMBER, NUMBER).</td></tr>
+  <tr><td><code>1name</code> handling</td><td>A naive scanner returns NUMBER <code>1</code> then IDENTIFIER <code>name</code>. The number scanner checks whether the digits are followed by a letter or <code>_</code>; if so it consumes the whole word and reports one invalid-identifier error.</td></tr>
+  <tr><td>Unclosed string ate the file</td><td>The string scanner first read until a closing quote or EOF, hiding every later error. Strings now stop at end of line, so the four required errors can all be reported from one program.</td></tr>
+  <tr><td>Symbol-table collisions</td><td>With 31 buckets and hash multiplier 31, <code>h*31 % 31 = 0</code>, so the hash depended only on the last letter (<code>count</code>, <code>limit</code>, <code>result</code> collided). We switched to 101 buckets (a prime different from the multiplier).</td></tr>
+  <tr><td>Parallel work &amp; merge conflicts</td><td>Five people built the scanner at once. Task 1 froze the shared contracts (<code>TokenType</code>, <code>Token</code>, <code>LexicalError</code>, <code>SourceCursor</code>) so each member worked on a separate branch and file, merged through reviewed pull requests. Golden expected-output files catch any change to the output format byte for byte.</td></tr>
+</table>
+
+<h2>Testing &amp; Known Limitations</h2>
+<ul>
+  <li><b>Tests:</b> <code>tests/test_programs.txt</code> holds 16 labelled programs (valid code, all tokens, comment edge cases, the four required errors alone and together, empty file, a 1,100-character line). <code>python tests/verify.py</code> compares each against <code>tests/expected/</code>: <b>16/16 pass</b>. Unit tests cover the cursor, scanners, symbol table, CLI and lexer. Extra checks: LF = CRLF output, a 10,000-line file scans in about 0.1 s, empty and whitespace-only files give only EOF.</li>
+  <li><b>Limitations:</b> <code>true</code>/<code>false</code> are scanned as IDENTIFIER (the frozen 31-type enum has no boolean-literal type); <code>3.14abc</code> gives NUMBER + IDENTIFIER without an error; non-ASCII letters (e.g. <code>&eacute;</code>) are accepted in identifiers; <code>&amp;&amp;</code> and <code>||</code> are not Mini Java operators and are reported as illegal characters.</li>
+</ul>
+
+</body>
+</html>

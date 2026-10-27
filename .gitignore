@@ -64,3 +64,6 @@ Thumbs.db
 *.swp
 *.swo
 *~
+
+# Submission package (built with git archive)
+phase01-submission.zip
