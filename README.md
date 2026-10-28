@@ -30,16 +30,29 @@ compiler_project/
 │   ├── test_task5.py     # Task 5 symbol table test suite
 │   ├── test_task6.py     # Task 6 CLI & formatter test suite
 │   └── test_task7.py     # Task 7 lexer pipeline integration test suite
-├── docs/               # Documentation & notes
+├── report.pdf          # Phase 01 report (2 pages)
 ├── README.md
-└── AGENTS.md
+├── docs/               # Notes + report source (repo only, not in the submission zip)
+└── AGENTS.md           # Developer/agent guide (repo only)
 ```
 
 ---
 
-## How to Run
+## Prerequisites
 
-Make sure you have Python 3.10+ installed (on Windows use `python`, not `python3`):
+- Python 3.10 or newer. Nothing else: no packages to install, only the standard library.
+- On Windows the command is `python`; on macOS/Linux use `python3` in every command below.
+- Run every command from the project folder (the one that contains `src/` and `tests/`).
+
+## Build
+
+There is no build step (Python runs the source directly). Optional syntax check:
+
+```bash
+python -m compileall -q src
+```
+
+## How to Run
 
 ```bash
 # Scan a Mini Java file
@@ -72,6 +85,17 @@ Lexeme: EOF, Token: EOF
 
 Symbol Table
 Index: 0, Name: x, Occurrences: 1:5
+```
+
+---
+
+## Submission (Phase 01)
+
+- Code frozen at commit `3065ffd` (all later commits change documentation only).
+- Build the zip from the latest commit (only tracked files, so no caches or local files get in):
+
+```bash
+git archive --format=zip --prefix=phase01-submission/ -o phase01-submission.zip HEAD src tests README.md report.pdf
 ```
 
 ---
@@ -127,6 +151,6 @@ Abstract interface to traverse the source code character by character:
 - **Task 4:** Delimiters & Operators (Ali) - *Done*
 - **Task 5:** Symbol Table (Ahmed) - *Done*
 - **Task 6:** CLI Driver & Formatter (Omar) - *Done*
-- **Task 7:** Pipeline Integration (Karim)
-- **Task 8:** Testing & Bug Fixing (All)
-- **Task 9:** Final Report & Presentation (All)
+- **Task 7:** Pipeline Integration (Karim) - *Done*
+- **Task 8:** Testing & Bug Fixing (Mahmoud) - *Done*
+- **Task 9:** Final Report & Submission (Omar) - *Done*

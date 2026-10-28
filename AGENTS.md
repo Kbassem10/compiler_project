@@ -140,8 +140,8 @@ class SourceCursor(ABC):
 | **Task 5** | Symbol Table Structure | Ahmed Shalaby | **DONE** | `src/symbol_table.py`: `SymbolTable` (101 buckets, polynomial hash with multiplier 31, separate chaining). `insert(token, type=None, scope=None)` adds a new `SymbolEntry` or appends `(line, column)` to an existing one; `lookup(name)`, `entries()` (first-seen order), `len()`. |
 | **Task 6** | CLI Driver & Formatter | Omar Walid | **DONE** | `src/main.py`: `main(argv)` CLI (`python -m src <file> [-o out] [--strict]`), file errors print one line and exit 1, lexical errors exit 0 (1 with `--strict`). `src/formatter.py`: `format_token`, `format_symbol_table`, `format_output(tokens, errors, table)` merges tokens and errors by `(line, column)` so errors print inline, then a `Symbol Table` section. `tests/test_programs.txt` (16 `### TEST NN: label` cases), `tests/expected/test_NN.out`, `tests/verify.py` (PASS/FAIL + unified diff), `tests/test_task6.py`. |
 | **Task 7** | Lexer Pipeline Integration | Karim Bassem | **DONE** | `src/lexer.py`: `Lexer(source, on_token=None, on_error=None)` coordinates `SourceCursor`, comments/whitespace skipping, sub-scanners (`scan_word`, `scan_number_or_invalid_id`, `scan_string`, `scan_operator_or_delimiter`), and `SymbolTable`. `getNextToken()` (and alias `get_next_token()`) implements the main dispatch loop with panic-mode recovery; `tokenize()` consumes full input into `(tokens, errors, symbol_table)`. `tests/test_task7.py`. |
-| **Task 8** | Verification & QA | All | **PENDING** | Run test corpus (`tests/test_programs.txt`), verify line/column accuracy, and test edge cases. |
-| **Task 9** | Report & Final Submission | All | **PENDING** | Final documentation, code cleanup, and submission packaging. |
+| **Task 8** | Verification & QA | Mahmoud Farag | **DONE** | Marked Completed in Notion. `docs/test_report.md` was committed empty; the test results (16/16 golden cases, LF = CRLF, 10,000-line file in ~0.1 s, Task 8 matrix probes) are summarised in the report's Testing section. |
+| **Task 9** | Report & Final Submission | Omar Walid | **DONE** | `report.pdf` (2 A4 pages: token specs, error handling & recovery, challenges, testing & limitations), generated from `docs/report.html`. Submission zip `phase01-submission.zip` = `src/`, `tests/`, `README.md`, `report.pdf`, built with `git archive` (see Section 6). Code frozen at `3065ffd`. Still needs a teammate's clean-build check and proofreading. |
 
 ---
 
@@ -199,6 +199,12 @@ python -X utf8 tests/test_task7.py
 
 # Golden-output check of every case in tests/test_programs.txt
 python tests/verify.py
+
+# Rebuild report.pdf after editing docs/report.html (needs LibreOffice; must stay 2 pages)
+soffice --headless --convert-to pdf:writer_web_pdf_Export --outdir . docs/report.html
+
+# Build the submission zip from the latest commit (tracked files only)
+git archive --format=zip --prefix=phase01-submission/ -o phase01-submission.zip HEAD src tests README.md report.pdf
 ```
 
 ---
@@ -212,5 +218,7 @@ python tests/verify.py
 - **Hash multiplier must differ from the table size:** with size 31 and multiplier 31, `h * 31 % 31 == 0`, so the hash only sees the last letter (`count`, `limit`, `result` all collide). The default size is 101 for this reason.
 - **Spec alignment done in Task 6:** the unclosed block comment message is now `Error: unclosed comment starting at line L, column C.` (as in the PDF), and `scan_string` stops at the end of the line, so an unclosed string no longer swallows the rest of the file.
 - **`true` / `false` are still `IDENTIFIER`:** the PDF says they should be literal tokens, but the frozen `TokenType` has no member for them. Team decision needed.
+- **Report must match the code:** after any code change, re-run the sample and error example in `docs/report.html`, re-export `report.pdf`, and check it is still 2 pages (`pdfinfo report.pdf`). LibreOffice ignores CSS table borders, so tables use the HTML `border` attribute.
+- **`git archive` only packs committed files:** commit `report.pdf` before building the zip.
 - **`tests/test_programs.txt` starts with `### TEST` markers:** running the CLI on the whole file reports `#` as illegal characters; use `tests/verify.py`, which splits it into cases.
 - **Task 3 goes beyond the frozen contract (confirm with the team):** `scan_string` accepts single-quoted `'...'` as `STRING`, and `scan_number_or_invalid_id` emits an "invalid identifier" `LexicalError` for inputs like `1name`.
