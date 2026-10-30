@@ -167,12 +167,23 @@ def test_iteration_protocol():
 
 
 def test_file_cursor_input():
-    cursor = FileCursor("boolean flag = true;")
+    cursor = FileCursor("boolean flag = true; boolean done = false;")
     tokens, errors, table = tokenize(cursor)
     assert len(errors) == 0
     assert tokens[0].type is TokenType.BOOLEAN
     assert tokens[1].type is TokenType.IDENTIFIER
     assert tokens[1].lexeme == "flag"
+    assert tokens[3].type is TokenType.BOOLEAN
+    assert tokens[3].lexeme == "true"
+    assert tokens[8].type is TokenType.BOOLEAN
+    assert tokens[8].lexeme == "false"
+    # Neither 'true' nor 'false' nor 'boolean' should be in the symbol table
+    assert table.lookup("true") is None
+    assert table.lookup("false") is None
+    assert table.lookup("boolean") is None
+    assert table.lookup("flag") is not None
+    assert table.lookup("done") is not None
+    assert len(table) == 2
 
 
 if __name__ == "__main__":

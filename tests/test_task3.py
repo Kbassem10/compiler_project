@@ -1,3 +1,9 @@
+import sys
+from pathlib import Path
+
+# Add project root to sys.path so it runs directly or with -m
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
 from src.cursor import SourceCursor
 from src.scanners import scan_word_or_number_or_string
 from src.token_type import TokenType
@@ -48,6 +54,9 @@ def run_tests():
         ("123", TokenType.NUMBER, "123"),
         ("45.67", TokenType.NUMBER, "45.67"),
         ('"Hello World"', TokenType.STRING, '"Hello World"'),
+        ("boolean", TokenType.BOOLEAN, "boolean"),
+        ("true", TokenType.BOOLEAN, "true"),
+        ("false", TokenType.BOOLEAN, "false"),
         ("1invalidId", LexicalError, "invalid identifier"),
         ('"Unclosed String', LexicalError, "unclosed string"),
     ]

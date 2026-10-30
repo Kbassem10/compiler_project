@@ -17,6 +17,8 @@ KEYWORDS = {
     "while": TokenType.WHILE,
     "for": TokenType.FOR,
     "return": TokenType.RETURN,
+    "true": TokenType.BOOLEAN,
+    "false": TokenType.BOOLEAN,
 }
 
 # Operators map

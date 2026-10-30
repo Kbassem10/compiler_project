@@ -136,7 +136,7 @@ class SourceCursor(ABC):
 | **Task 1** | Setup & Core Contracts | Karim Bassem | **DONE** | Frozen `TokenType`, `Token`, `LexicalError`, `SourceCursor`, conventions, repo structure. |
 | **Task 2** | Cursor & Comments Engine | Karim Bassem | **DONE** | Concrete `FileCursor` / `StringCursor` implementing `SourceCursor`. 1-indexed coordinates, CRLF handling, whitespace & comment skipping (`//`, `/* */`), and unclosed comment diagnostic. |
 | **Task 3** | Words & Literals Scanners | Mahmoud Farag | **DONE** | `src/scanners.py`: `scan_word_or_number_or_string()` dispatches to `scan_word`, `scan_number_or_invalid_id`, `scan_string`. Returns `Token`, `LexicalError`, or `None` (no match). |
-| **Task 4** | Delimiters & Operators | Ali Essam | **DONE** | `src/scanner_delimiters.py` — `scan_operator_or_delimiter(cursor)` returns `Token \| LexicalError`. Matches 2-char ops (`==`, `!=`, `<=`, `>=`) before 1-char ops, then delimiters, fallback emits `LexicalError` for illegal chars and advances past them. |
+| **Task 4** | Delimiters & Operators | Ali Essam | **DONE** | `src/scanner_delimiters.py` — `scan_operator_or_delimiter(cursor)` returns `Token | LexicalError`. Matches 2-char ops (`==`, `!=`, `<=`, `>=`) before 1-char ops, then delimiters, fallback emits `LexicalError` for illegal chars and advances past them. `tests/test_task4.py`. |
 | **Task 5** | Symbol Table Structure | Ahmed Shalaby | **DONE** | `src/symbol_table.py`: `SymbolTable` (101 buckets, polynomial hash with multiplier 31, separate chaining). `insert(token, type=None, scope=None)` adds a new `SymbolEntry` or appends `(line, column)` to an existing one; `lookup(name)`, `entries()` (first-seen order), `len()`. |
 | **Task 6** | CLI Driver & Formatter | Omar Walid | **DONE** | `src/main.py`: `main(argv)` CLI (`python -m src <file> [-o out] [--strict]`), file errors print one line and exit 1, lexical errors exit 0 (1 with `--strict`). `src/formatter.py`: `format_token`, `format_symbol_table`, `format_output(tokens, errors, table)` merges tokens and errors by `(line, column)` so errors print inline, then a `Symbol Table` section. `tests/test_programs.txt` (16 `### TEST NN: label` cases), `tests/expected/test_NN.out`, `tests/verify.py` (PASS/FAIL + unified diff), `tests/test_task6.py`. |
 | **Task 7** | Lexer Pipeline Integration | Karim Bassem | **DONE** | `src/lexer.py`: `Lexer(source, on_token=None, on_error=None)` coordinates `SourceCursor`, comments/whitespace skipping, sub-scanners (`scan_word`, `scan_number_or_invalid_id`, `scan_string`, `scan_operator_or_delimiter`), and `SymbolTable`. `getNextToken()` (and alias `get_next_token()`) implements the main dispatch loop with panic-mode recovery; `tokenize()` consumes full input into `(tokens, errors, symbol_table)`. `tests/test_task7.py`. |
@@ -192,7 +192,8 @@ python -m py_compile src/*.py
 
 # Tests (plain scripts, no pytest)
 python -X utf8 tests/test_task2.py
-python -X utf8 -m tests.test_task3
+python -X utf8 tests/test_task3.py
+python -X utf8 tests/test_task4.py
 python -X utf8 tests/test_task5.py
 python -X utf8 tests/test_task6.py
 python -X utf8 tests/test_task7.py
@@ -213,11 +214,11 @@ git archive --format=zip --prefix=phase01-submission/ -o phase01-submission.zip 
 
 - **No pytest:** tests are plain scripts using `assert` + `print`. Run them as shown in Section 6.
 - **Windows console:** `-X utf8` is required, or the ✅ prints raise `UnicodeEncodeError`.
-- **`test_task3.py` must run with `-m`:** running it as a file path fails with `ModuleNotFoundError: No module named 'src'`.
+- **`test_task3.py` runs directly:** `sys.path` is initialized in all test scripts so they run with `python tests/test_taskN.py` without requiring `-m`.
 - **`StringCursor` is an alias:** `StringCursor = FileCursor` in `src/cursor.py`. `test_task3.py` defines its own mock with the same name.
 - **Hash multiplier must differ from the table size:** with size 31 and multiplier 31, `h * 31 % 31 == 0`, so the hash only sees the last letter (`count`, `limit`, `result` all collide). The default size is 101 for this reason.
 - **Spec alignment done in Task 6:** the unclosed block comment message is now `Error: unclosed comment starting at line L, column C.` (as in the PDF), and `scan_string` stops at the end of the line, so an unclosed string no longer swallows the rest of the file.
-- **`true` / `false` are still `IDENTIFIER`:** the PDF says they should be literal tokens, but the frozen `TokenType` has no member for them. Team decision needed.
+- **`true` / `false` are boolean literals (`BOOLEAN`):** as specified in the PDF, `"true"` and `"false"` map to `TokenType.BOOLEAN` in `src/conventions.py` so they emit `Token: BOOLEAN` and are not treated as identifiers in the symbol table.
 - **Report must match the code:** after any code change, re-run the sample and error example in `docs/report.html`, re-export `report.pdf`, and check it is still 2 pages (`pdfinfo report.pdf`). LibreOffice ignores CSS table borders, so tables use the HTML `border` attribute.
 - **`git archive` only packs committed files:** commit `report.pdf` before building the zip.
 - **`tests/test_programs.txt` starts with `### TEST` markers:** running the CLI on the whole file reports `#` as illegal characters; use `tests/verify.py`, which splits it into cases.

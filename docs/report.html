@@ -38,7 +38,7 @@ Identifiers go into a hash-table symbol table (101 buckets, polynomial hash &tim
   <tr><td>Type keywords</td><td>INT <code>int</code> &middot; FLOAT <code>float</code> &middot; BOOLEAN <code>boolean</code> &middot; CHAR <code>char</code> &middot; STRING_TYPE <code>String</code></td></tr>
   <tr><td>Control keywords</td><td>IF <code>if</code> &middot; ELSE <code>else</code> &middot; WHILE <code>while</code> &middot; FOR <code>for</code> &middot; RETURN <code>return</code></td></tr>
   <tr><td>Names</td><td>IDENTIFIER <code>[A-Za-z_][A-Za-z0-9_]*</code> that is not a keyword</td></tr>
-  <tr><td>Literals</td><td>NUMBER <code>[0-9]+(\.[0-9]+)?</code> (e.g. <code>10</code>, <code>25.5</code>) &middot; STRING <code>"..."</code> or <code>'...'</code> on one line, quotes kept in the lexeme, <code>\</code> escapes the next character</td></tr>
+  <tr><td>Literals</td><td>NUMBER <code>[0-9]+(\.[0-9]+)?</code> (e.g. <code>10</code>, <code>25.5</code>) &middot; STRING <code>"..."</code> or <code>'...'</code> on one line, quotes kept in the lexeme, <code>\</code> escapes the next character &middot; BOOLEAN <code>true</code>, <code>false</code></td></tr>
   <tr><td>Operators</td><td>ASSIGN <code>=</code> &middot; MATHOP <code>+ - * /</code> &middot; LOGOP <code>== != &lt; &gt; &lt;= &gt;=</code></td></tr>
   <tr><td>Delimiters</td><td>LPAR <code>(</code> &middot; RPAR <code>)</code> &middot; LCUR <code>{</code> &middot; RCUR <code>}</code> &middot; LSQU <code>[</code> &middot; RSQU <code>]</code> &middot; SEMICOLON <code>;</code> &middot; COMMA <code>,</code> &middot; DOT <code>.</code></td></tr>
   <tr><td>Control</td><td>EOF &mdash; emitted once, at the position right after the last character</td></tr>
@@ -105,7 +105,7 @@ Lexeme: =, Token: ASSIGN                           Lexeme: ;, Token: SEMICOLON
 <h2>Testing &amp; Known Limitations</h2>
 <ul>
   <li><b>Tests:</b> <code>tests/test_programs.txt</code> holds 16 labelled programs (valid code, all tokens, comment edge cases, the four required errors alone and together, empty file, a 1,100-character line). <code>python tests/verify.py</code> compares each against <code>tests/expected/</code>: <b>16/16 pass</b>. Unit tests cover the cursor, scanners, symbol table, CLI and lexer. Extra checks: LF = CRLF output, a 10,000-line file scans in about 0.1 s, empty and whitespace-only files give only EOF.</li>
-  <li><b>Limitations:</b> <code>true</code>/<code>false</code> are scanned as IDENTIFIER (the frozen 31-type enum has no boolean-literal type); <code>3.14abc</code> gives NUMBER + IDENTIFIER without an error; non-ASCII letters (e.g. <code>&eacute;</code>) are accepted in identifiers; <code>&amp;&amp;</code> and <code>||</code> are not Mini Java operators and are reported as illegal characters.</li>
+  <li><b>Limitations:</b> <code>3.14abc</code> gives NUMBER + IDENTIFIER without an error; non-ASCII letters (e.g. <code>&eacute;</code>) are accepted in identifiers; <code>&amp;&amp;</code> and <code>||</code> are not Mini Java operators and are reported as illegal characters.</li>
 </ul>
 
 </body>
