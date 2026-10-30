@@ -145,6 +145,16 @@ Abstract interface to traverse the source code character by character:
 
 ---
 
+## Team Members
+
+- **Karim Bassem** (ID: `231000797`)
+- **Omar Walid Khalafallah** (ID: `231000554`)
+- **Ahmed Khaled Shalaby** (ID: `231000514`)
+- **Mahmoud Farag** (ID: `231002115`)
+- **Ali Essam** (ID: `231001040`)
+
+---
+
 ## Team Tasks
 
 - **Task 1:** Setup & Contracts (Karim) - *Done*
